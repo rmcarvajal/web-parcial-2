@@ -50,7 +50,17 @@ describe('ReservationsService', () => {
     const savedReservation = { ...reservation, status: 'cancelled' } as ReservationEntity;
 
     // TODO TEST 2: Arrange dependencies, call cancel(7), and check the required behavior.
-    throw new Error('TODO TEST 2: complete the successful cancellation test');
+
+    reservationsRepositoryMock.findOne.mockReturnValue(reservation)
+    reservationsRepositoryMock.save.mockReturnValue(savedReservation)
+
+    const result = await service.cancel(7)
+
+    expect(reservationRulesServiceMock.ensureCanCancel).toHaveBeenCalledWith(reservation)
+    expect(reservation.status).toEqual('cancelled')
+    expect(reservationsRepositoryMock.save).toHaveBeenCalledWith(reservation)
+    expect(result).toEqual(savedReservation)
+    // throw new Error('TODO TEST 2: complete the successful cancellation test');
   });
 
   it('does not change or save a reservation when the rule rejects cancellation', async () => {
