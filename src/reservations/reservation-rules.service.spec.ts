@@ -1,6 +1,8 @@
 import { ConflictException } from '@nestjs/common';
 import { ReservationEntity } from './entities/reservation.entity';
 import { ReservationRulesService } from './reservation-rules.service';
+import {describe, it, expect, beforeEach} from '@jest/globals'
+
 
 describe('ReservationRulesService', () => {
   let service: ReservationRulesService;
