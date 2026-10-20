@@ -1,26 +1,33 @@
-# Resultados del parcial práctico 2
+Rosa María Carvajal Cuellar
 
-Registrar resultados reales después de implementar y probar los endpoints. Sustituir los IDs de ejemplo por los utilizados.
 
-| Petición y datos utilizados | Código esperado | Código obtenido | Observación |
-| --- | --- | --- | --- |
-| Crear una reserva con datos válidos y sala existente. | 201 | Pendiente | |
-| Crear con participants como texto. | 400 | Pendiente | |
-| Crear con una propiedad adicional, como status. | 400 | Pendiente | |
-| Crear con una sala inexistente. | 404 | Pendiente | |
-| Cancelar una reserva activa y consultar el cambio guardado. | 200 | Pendiente | |
-| Cancelar de nuevo la misma reserva. | 409 | Pendiente | |
-| Intentar cancelar con ID abc. | 400 | Pendiente | |
-| Intentar cancelar con un ID entero inexistente. | 404 | Pendiente | |
 
-## Pruebas unitarias
 
-Registrar el resultado de `npm test`.
 
-| Caso | Resultado obtenido |
-| --- | --- |
-| 1. La regla real rechaza una reserva cancelada. | Pendiente |
-| 2. El servicio cancela y guarda una reserva activa. | Pendiente |
-| 3. Si la regla simulada rechaza, conserva active y no guarda. | Pendiente |
+|REQUESTS|BODY|RESULT|
+|-|-|-|
+|GET http://localhost:3003/api/reservations|N/A|200|
+|GET http://localhost:3003/api/rooms|N/A|200|
+|GET http://localhost:3003/api/reservations/1|N/A|200|
+|POST http://localhost:3003/api/reservations|{<br />  "purpose": "test room",<br />  "participants": 9,<br />  "roomId": 2<br />}|201|
+|POST http://localhost:3003/api/reservations|{<br />  "purpose": "test room",<br />  "participants": "9",<br />  "roomId": 2<br />}|400|
+|POST http://localhost:3003/api/reservations|{<br />  "purpose": "Invalid extra property",<br />  "participants": 6,<br />  "roomId": 1,<br />  "status": "cancelled"<br />}|400|
+|POST http://localhost:3003/api/reservations|{<br />  "purpose": "Unknown room",<br />  "participants": 6,<br />  "roomId": 999999999<br />}|404|
+|PATCH http://localhost:3003/api/reservations/1/cancel|N/A|200|
+|GET http://localhost:3003/api/reservations/1|N/A|200|
+|PATCH http://localhost:3003/api/reservations/1/cancel|N/A|409|
+|PATCH http://localhost:3003/api/reservations/abc/cancel|N/A|400|
+|PATCH http://localhost:3003/api/reservations/999999999/cancel|N/A|404|
 
-Resumen de ejecución: pendiente.
+
+
+
+
+Test Suites: 2 passed, 2 total
+
+Tests:       3 passed, 3 total
+
+Snapshots:   0 total
+
+Time:        1.36 s, estimated 2 s
+
