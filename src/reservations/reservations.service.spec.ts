@@ -74,6 +74,16 @@ describe('ReservationsService', () => {
 
     // TODO TEST 3: Make the mock rule reject this ACTIVE reservation, as requested.
     // Check the exception, the unchanged state, and the absence of a save() call.
-    throw new Error('TODO TEST 3: complete the rejected cancellation test');
+
+    reservationsRepositoryMock.findOne.mockReturnValue(reservation)
+    reservationRulesServiceMock.ensureCanCancel.mockImplementation(() => {
+      throw new ConflictException('rejecting ACTIVE reservation')
+    })
+    
+    await expect(service.cancel(9)).rejects.toBeInstanceOf(ConflictException)
+    expect(reservationRulesServiceMock.ensureCanCancel).toHaveBeenCalledWith(reservation)
+    expect(reservation.status).toEqual('active')
+    expect(reservationsRepositoryMock.save).not.toHaveBeenCalledWith(reservation)
+    // throw new Error('TODO TEST 3: complete the rejected cancellation test');
   });
 });
